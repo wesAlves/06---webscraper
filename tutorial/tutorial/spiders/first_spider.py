@@ -1,10 +1,10 @@
 import scrapy
 
 
-class QautesSpider(scrapy.Spider):
-    name = 'quotes'
+class QuotesSpider(scrapy.Spider):
+    name = "quotes"
 
-    def start_request(self):
+    def start_requests(self):
         urls = [
             'https://quotes.toscrape.com/page/1/',
             'https://quotes.toscrape.com/page/2/',
@@ -13,9 +13,8 @@ class QautesSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        page = response.url.split('/')[-2]
-        filename = f'quotes={page}.html'
-
-        with open(filename, 'wp') as f:
+        page = response.url.split("/")[-2]
+        filename = f'quotes-{page}.html'
+        with open(filename, 'wb') as f:
             f.write(response.body)
         self.log(f'Saved file {filename}')
